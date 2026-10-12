@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>김혜승의 개인 웹사이트</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --text-dim: #94a3b8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    
+    /* 상단 메뉴 */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo { font-size: 1.2rem; font-weight: bold; color: var(--accent); }
+    .nav-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* 자기소개 영역 */
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    .profile-emoji { font-size: 70px; margin-bottom: 10px; }
+    header h1 { font-size: 2.1rem; margin-bottom: 10px; word-break: keep-all; }
+    .student-info { color: var(--accent); font-weight: bold; font-size: 1.05rem; margin-bottom: 15px; }
+    .intro-text { color: var(--text-dim); font-size: 1rem; max-width: 580px; margin: 0 auto; word-break: keep-all; line-height: 1.7; }
+
+    /* 태그 목록 */
+    .tags {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      background: #1e293b;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+
+    /* 연락처 버튼 */
+    .contact { margin-top: 25px; }
+    .contact a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin: 0 10px;
+      transition: color 0.2s;
+    }
+    .contact a:hover { color: var(--accent); }
+
+    /* 프로젝트 메인 콘텐츠 */
+    .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--accent);
+      padding-left: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 22px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+    .card h3 { color: var(--accent); margin-bottom: 10px; font-size: 1.15rem; }
+    .card p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 18px; line-height: 1.5; }
+    .card a {
+      display: inline-block;
+      padding: 8px 16px;
+      background: var(--accent);
+      color: #0f172a;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+      font-size: 0.85rem;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 메뉴 -->
+  <nav>
+    <div class="logo">혜승's Space</div>
+    <div class="nav-links">
+      <a href="#about">소개</a>
+      <a href="#projects">작업물</a>
+      <a href="https://github.com/hyeseung0320-commits" target="_blank">GitHub</a>
+    </div>
+  </nav>
+
+  <!-- 동기 대상 자기소개 섹션 -->
+  <header id="about">
+    <div class="profile-emoji">👋</div>
+    <h1>안녕하세요! 국민대 동기 여러분</h1>
+    <div class="student-info">국민대학교 1학년 · 김혜승 (학번: 20262072)</div>
+    
+    <div class="intro-text">
+      <p>반가워요! 수업을 들으며 나만의 웹사이트 제작에 도전하고 있는 1학년 김혜승입니다.</p>
+      <p>요즘은 <strong>GitHub</strong>를 활용해서 HTML 웹사이트를 직접 만들고 배포하는 방법을 차근차근 배우고 있어요!</p>
+    </div>
+
+    <!-- 기술 및 태그 -->
+    <div class="tags">
+      <span class="tag">🎓 국민대학교</span>
+      <span class="tag">🐣 1학년 (20262072)</span>
+      <span class="tag">💻 HTML/CSS</span>
+      <span class="tag">🚀 GitHub Pages 배포 배우는 중</span>
+    </div>
+
+    <!-- 이메일 및 GitHub -->
+    <div class="contact">
+      <a href="mailto:hyeseunghyeseung@naver.com">✉️ hyeseunghyeseung@naver.com</a>
+      <a href="https://github.com/hyeseung0320-commits" target="_blank">🐙 GitHub 프로필 방문하기</a>
+    </div>
+  </header>
+
+  <!-- 작업 및 프로젝트 모음 -->
+  <main class="container" id="projects">
+    <h2 class="section-title">My Projects</h2>
+    <div class="grid">
+      
+      <!-- 현재 작업: 내 사이트 만들기 -->
+      <div class="card">
+        <h3>🌐 내 개인 사이트 만들기</h3>
+        <p>수업을 들으며 만들고 있는 저의 첫 번째 포털 사이트입니다. 계속해서 새로운 기능과 작업물을 업데이트해 나갈 예정이에요!</p>
+        <a href="#">현재 보고 계신 페이지</a>
+      </div>
+
+      <!-- 프로젝트: 갤러그 게임 -->
+      <div class="card">
+        <h3>🚀 꿀잼 슈팅게임 (Galaga)</h3>
+        <p>HTML5와 JavaScript를 활용해 만든 추억의 아케이드 갤러그 게임입니다. 심심할 때 언제든 직접 플레이해 보세요!</p>
+        <a href="/galaga/" target="_blank">게임 플레이하기</a>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2026 김혜승 (20262072). All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
