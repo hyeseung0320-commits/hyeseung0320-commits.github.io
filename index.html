@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +8,9 @@
   <!-- SEO 기본 메타 -->
   <meta name="description" content="국민대학교 1학년 김혜승의 개인 포트폴리오 홈페이지입니다. HTML/CSS와 GitHub Pages로 직접 만든 웹사이트와 갤러그 슈팅게임 등 작업물을 소개합니다.">
   <link rel="canonical" href="https://hyeseung0320-commits.github.io/">
+
+  <!-- 파비콘 (이모지 SVG) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪡</text></svg>">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -23,20 +26,36 @@
   <meta name="twitter:description" content="국민대학교 1학년 김혜승의 개인 포트폴리오 홈페이지입니다. HTML/CSS와 GitHub Pages로 직접 만든 웹사이트와 갤러그 슈팅게임 등 작업물을 소개합니다.">
 
   <style>
-    :root {
+    /* 다크 테마 (기본) */
+    :root,
+    [data-theme="dark"] {
       --bg: #0f172a;
       --card-bg: #1e293b;
       --accent: #38bdf8;
       --text: #f8fafc;
       --text-dim: #94a3b8;
       --border: #334155;
+      --tag-bg: #1e293b;
     }
+    /* 라이트 테마 */
+    [data-theme="light"] {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --accent: #0284c7;
+      --text: #0f172a;
+      --text-dim: #475569;
+      --border: #cbd5e1;
+      --tag-bg: #e0f2fe;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     /* 상단 메뉴 */
@@ -45,13 +64,15 @@
       justify-content: space-between;
       align-items: center;
       padding: 18px 8%;
-      background: rgba(15, 23, 42, 0.9);
+      background: var(--bg);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 10;
+      transition: background-color 0.3s, border-color 0.3s;
     }
     .logo { font-size: 1.2rem; font-weight: bold; color: var(--accent); }
+    .nav-right { display: flex; align-items: center; }
     .nav-links a {
       color: var(--text-dim);
       text-decoration: none;
@@ -60,6 +81,24 @@
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--accent); }
+
+    /* 테마 토글 버튼 */
+    .theme-toggle {
+      margin-left: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .theme-toggle:hover { border-color: var(--accent); transform: scale(1.08); }
 
     /* 자기소개 영역 */
     header {
@@ -81,7 +120,7 @@
       flex-wrap: wrap;
     }
     .tag {
-      background: #1e293b;
+      background: var(--tag-bg);
       border: 1px solid var(--accent);
       color: var(--accent);
       padding: 4px 14px;
@@ -118,23 +157,122 @@
       border-radius: 12px;
       padding: 22px;
       border: 1px solid var(--border);
-      transition: transform 0.2s, border-color 0.2s;
+      transition: transform 0.2s, border-color 0.2s, background-color 0.3s;
+      display: flex;
+      flex-direction: column;
     }
     .card:hover {
       transform: translateY(-4px);
       border-color: var(--accent);
     }
+    /* 카드 썸네일 (이모지 배너) */
+    .card-thumb {
+      height: 120px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 52px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(56,189,248,0.04));
+      border: 1px solid var(--border);
+    }
     .card h3 { color: var(--accent); margin-bottom: 10px; font-size: 1.15rem; }
-    .card p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 18px; line-height: 1.5; }
-    .card a {
+    .card p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 14px; line-height: 1.5; }
+    /* 카드 기술 태그 */
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .card-tag {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+    }
+    .card .card-date { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 14px; }
+    .card a.card-link {
       display: inline-block;
       padding: 8px 16px;
       background: var(--accent);
-      color: #0f172a;
+      color: var(--bg);
       font-weight: bold;
       text-decoration: none;
       border-radius: 6px;
       font-size: 0.85rem;
+      margin-top: auto;
+      align-self: flex-start;
+    }
+
+    /* 스크롤 등장 애니메이션 */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* 응원 하트 섹션 */
+    .cheer {
+      text-align: center;
+      padding: 10px 20px 20px;
+    }
+    .cheer p { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 16px; }
+    .heart-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.1s, background-color 0.3s;
+      font-family: inherit;
+    }
+    .heart-btn:hover { border-color: var(--accent); }
+    .heart-btn:active { transform: scale(0.95); }
+    .heart-btn .heart-icon {
+      font-size: 1.3rem;
+      transition: transform 0.25s;
+      display: inline-block;
+    }
+    /* 눌렀을 때 하트 톡 터지는 애니메이션 */
+    .heart-btn.pop .heart-icon { animation: heartPop 0.45s ease; }
+    @keyframes heartPop {
+      0%   { transform: scale(1); }
+      35%  { transform: scale(1.5); }
+      70%  { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+    .heart-btn .heart-count {
+      font-weight: bold;
+      color: var(--accent);
+      min-width: 20px;
+    }
+    .cheer .cheer-thanks {
+      margin-top: 14px;
+      font-size: 0.88rem;
+      color: var(--accent);
+      height: 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .cheer .cheer-thanks.show { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .heart-btn.pop .heart-icon { animation: none; }
     }
 
     footer {
@@ -152,10 +290,13 @@
   <!-- 상단 메뉴 -->
   <nav>
     <div class="logo">혜승's Space</div>
-    <div class="nav-links">
-      <a href="#about">소개</a>
-      <a href="#projects">작업물</a>
-      <a href="https://github.com/hyeseung0320-commits" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <div class="nav-right">
+      <div class="nav-links">
+        <a href="#about">소개</a>
+        <a href="#projects">작업물</a>
+        <a href="https://github.com/hyeseung0320-commits" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="테마 전환">🌙</button>
     </div>
   </nav>
 
@@ -164,7 +305,7 @@
     <div class="profile-emoji">👋</div>
     <h1>안녕하세요! 국민대 동기 여러분</h1>
     <div class="student-info">국민대학교 1학년 · 김혜승 (학번: 20262072)</div>
-
+    
     <div class="intro-text">
       <p>반가워요! 수업을 들으며 나만의 웹사이트 제작에 도전하고 있는 1학년 김혜승입니다.</p>
       <p>요즘은 <strong>GitHub</strong>를 활용해서 HTML 웹사이트를 직접 만들고 배포하는 방법을 차근차근 배우고 있어요!</p>
@@ -189,30 +330,125 @@
 
   <!-- 작업 및 프로젝트 모음 -->
   <main class="container" id="projects">
-    <h2 class="section-title">My Projects</h2>
+    <h2 class="section-title reveal">My Projects</h2>
     <div class="grid">
-
+      
       <!-- 현재 작업: 내 사이트 만들기 -->
-      <div class="card">
-        <h3>🌐 내 개인 사이트 만들기</h3>
-        <p>수업을 들으며 만들고 있는 저의 첫 번째 포털 사이트입니다. 계속해서 새로운 기능과 작업물을 업데이트해 나갈 예정이에요!</p>
-        <a href="#">현재 보고 계신 페이지</a>
+      <div class="card reveal">
+        <div class="card-thumb">🌐</div>
+        <h3>내 개인 사이트 만들기</h3>
+        <p>수업을 들으며 만들고 있는 저의 첫 번째 포트폴리오 사이트입니다. HTML/CSS로 직접 디자인하고 GitHub Pages로 배포했어요. 계속해서 새로운 기능과 작업물을 업데이트해 나갈 예정이에요!</p>
+        <div class="card-tags">
+          <span class="card-tag">HTML</span>
+          <span class="card-tag">CSS</span>
+          <span class="card-tag">GitHub Pages</span>
+        </div>
+        <div class="card-date">📅 2026년 10월 ~ 진행 중</div>
+        <a class="card-link" href="https://github.com/hyeseung0320-commits/hyeseung0320-commits.github.io" target="_blank" rel="noopener noreferrer">소스 코드 보기</a>
       </div>
 
       <!-- 프로젝트: 갤러그 게임 -->
-      <div class="card">
-        <h3>🚀 꿀잼 슈팅게임 (Galaga)</h3>
-        <p>HTML5와 JavaScript를 활용해 만든 추억의 아케이드 갤러그 게임입니다. 심심할 때 언제든 직접 플레이해 보세요!</p>
-        <a href="/galaga/" target="_blank" rel="noopener noreferrer">게임 플레이하기</a>
+      <div class="card reveal">
+        <div class="card-thumb">🚀</div>
+        <h3>꿀잼 슈팅게임 (Galaga)</h3>
+        <p>HTML5와 JavaScript를 활용해 만든 추억의 아케이드 갤러그 게임입니다. 적을 피하며 슈팅하는 간단한 조작으로, 심심할 때 언제든 직접 플레이해 보세요!</p>
+        <div class="card-tags">
+          <span class="card-tag">HTML5</span>
+          <span class="card-tag">JavaScript</span>
+          <span class="card-tag">Canvas</span>
+        </div>
+        <div class="card-date">📅 2026년</div>
+        <a class="card-link" href="/galaga/" target="_blank" rel="noopener noreferrer">게임 플레이하기</a>
       </div>
 
     </div>
   </main>
 
+  <!-- 응원 하트 -->
+  <section class="cheer reveal">
+    <p>이 페이지가 마음에 드셨다면 하트로 응원해 주세요! 💙</p>
+    <button class="heart-btn" id="heartBtn" type="button" aria-label="응원 하트 누르기">
+      <span class="heart-icon">🤍</span>
+      <span class="heart-count" id="heartCount">0</span>
+    </button>
+    <div class="cheer-thanks" id="cheerThanks">응원해 주셔서 감사해요! 😊</div>
+  </section>
+
   <footer>
     <p>© 2026 김혜승 (20262072). All rights reserved.</p>
   </footer>
 
+  <script>
+    // 테마 토글: 저장된 설정 불러오기
+    (function () {
+      var root = document.documentElement;
+      var toggle = document.getElementById('themeToggle');
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        root.setAttribute('data-theme', saved);
+      }
+      function updateIcon() {
+        toggle.textContent = root.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
+      }
+      updateIcon();
+      toggle.addEventListener('click', function () {
+        var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateIcon();
+      });
+    })();
+
+    // 스크롤 등장 애니메이션
+    (function () {
+      var items = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        items.forEach(function (el) { el.classList.add('visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      items.forEach(function (el) { observer.observe(el); });
+    })();
+
+    // 응원 하트 (브라우저 로컬 저장)
+    (function () {
+      var btn = document.getElementById('heartBtn');
+      var countEl = document.getElementById('heartCount');
+      var iconEl = btn.querySelector('.heart-icon');
+      var thanks = document.getElementById('cheerThanks');
+
+      var count = parseInt(localStorage.getItem('cheerCount') || '0', 10);
+      if (isNaN(count) || count < 0) { count = 0; }
+      countEl.textContent = count;
+      if (count > 0) { iconEl.textContent = '💙'; }
+
+      btn.addEventListener('click', function () {
+        count += 1;
+        localStorage.setItem('cheerCount', count);
+        countEl.textContent = count;
+        iconEl.textContent = '💙';
+
+        // 톡 터지는 애니메이션 재시작
+        btn.classList.remove('pop');
+        void btn.offsetWidth;
+        btn.classList.add('pop');
+
+        // 감사 메시지 잠깐 표시
+        thanks.classList.add('show');
+        clearTimeout(btn._thanksTimer);
+        btn._thanksTimer = setTimeout(function () {
+          thanks.classList.remove('show');
+        }, 2000);
+      });
+    })();
+  </script>
+
 </body>
 </html>
-
