@@ -70,20 +70,6 @@
       text-shadow: 0 1px 0 rgba(255,255,255,0.35);
       filter: drop-shadow(0 14px 22px rgba(10,77,51,0.22));
     }
-    /* 미세한 상단 하이라이트(유리 반사) */
-    .glass-highlight { position: relative; }
-    .glass-highlight::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.55), transparent 42%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
-
     /* 마우스 반응형 패럴랙스(JS에서 변수 주입) */
     .hero-title {
       transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
@@ -91,15 +77,13 @@
       will-change: transform;
     }
 
-    /* 글자 단위 호버 왜곡 */
-    .warp .ch {
+    /* 히어로 타이틀 호버 시 살짝 확대 */
+    .hero-line {
       display: inline-block;
-      transition: transform 0.35s cubic-bezier(.2,.8,.2,1), color 0.3s;
-      will-change: transform;
+      transition: transform 0.4s cubic-bezier(.2,.8,.2,1);
+      transform-origin: left center;
     }
-    .warp .ch:hover {
-      transform: translateY(-0.12em) scale(1.12) rotate(-3deg);
-    }
+    .hero-line:hover { transform: scale(1.02); }
 
     /* 프로젝트 행 호버 라인 */
     .work-row { transition: padding 0.4s cubic-bezier(.2,.8,.2,1), background 0.4s; }
@@ -170,9 +154,9 @@
     </p>
 
     <!-- 거대한 3D 크롬 타이포 -->
-    <h1 class="hero-title font-display font-extrabold leading-[0.9] tracking-[-0.04em] mb-10 select-none">
-      <span class="chrome-text glass-highlight warp block text-[clamp(3.2rem,14vw,11rem)]" data-warp>Hyeseung</span>
-      <span class="chrome-text glass-highlight block text-[clamp(2.4rem,10vw,8rem)]">Portfolio</span>
+    <h1 class="hero-title font-display font-extrabold leading-[0.95] tracking-[-0.02em] mb-10 select-none">
+      <span class="hero-line chrome-text block text-[clamp(3.2rem,13vw,10rem)]">Hyeseung</span>
+      <span class="hero-line chrome-text block text-[clamp(2.4rem,9vw,7.5rem)]">Portfolio</span>
     </h1>
 
     <p class="max-w-2xl text-lg md:text-2xl leading-relaxed font-medium">
@@ -299,7 +283,7 @@
   <!-- ===== CONTACT CTA ===== -->
   <section id="contact" class="max-w-[1200px] mx-auto px-[6vw] py-[12vh] border-t border-black/10">
     <p class="font-mono text-sm text-forest mb-6 reveal">(04) Contact</p>
-    <h2 class="reveal font-display font-extrabold text-[clamp(2.4rem,10vw,7rem)] leading-[0.95] tracking-[-0.03em] chrome-text glass-highlight">
+    <h2 class="reveal font-display font-extrabold text-[clamp(2.4rem,10vw,7rem)] leading-[0.95] tracking-[-0.03em] chrome-text">
       Let's talk.
     </h2>
     <a href="mailto:hyeseunghyeseung@naver.com"
@@ -337,20 +321,6 @@
   </footer>
 
   <script>
-    // 글자 단위로 쪼개 호버 왜곡 적용
-    (function () {
-      document.querySelectorAll('[data-warp]').forEach(function (el) {
-        var text = el.textContent;
-        el.textContent = '';
-        text.split('').forEach(function (c) {
-          var s = document.createElement('span');
-          s.className = 'ch';
-          s.textContent = c;
-          el.appendChild(s);
-        });
-      });
-    })();
-
     // 히어로 3D 마우스 패럴랙스
     (function () {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
