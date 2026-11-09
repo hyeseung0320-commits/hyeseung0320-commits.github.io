@@ -144,22 +144,22 @@
   </nav>
 
   <!-- ===== HERO ===== -->
-  <header id="top" class="relative max-w-[1200px] mx-auto px-[6vw] pt-[9vh] pb-[7vh]">
-    <!-- 떠다니는 글래스 오브젝트 -->
-    <div class="blob w-40 h-40 md:w-56 md:h-56 right-[4vw] top-[2vh] opacity-80" aria-hidden="true"></div>
-    <div class="blob w-20 h-20 right-[26vw] top-[30vh] opacity-60" style="animation-delay:-3s" aria-hidden="true"></div>
+  <header id="top" class="relative max-w-[1200px] mx-auto px-[6vw] pt-[9vh] pb-[7vh] overflow-hidden">
+    <!-- 떠다니는 글래스 오브젝트 (글자 뒤로) -->
+    <div class="blob w-32 h-32 md:w-48 md:h-48 right-[3vw] top-[1vh] opacity-70 -z-0" aria-hidden="true"></div>
+    <div class="blob w-16 h-16 right-[8vw] bottom-[8vh] opacity-50" style="animation-delay:-3s" aria-hidden="true"></div>
 
-    <p class="font-mono text-sm md:text-base text-muted mb-7 reveal visible">
+    <p class="relative z-10 font-mono text-sm md:text-base text-muted mb-7 reveal visible">
       국민대학교 · 1학년 · 20262072 — Front-end in progress
     </p>
 
     <!-- 거대한 3D 크롬 타이포 -->
-    <h1 class="hero-title font-display font-extrabold leading-[0.95] tracking-[-0.02em] mb-10 select-none">
-      <span class="hero-line chrome-text block text-[clamp(3.2rem,13vw,10rem)]">Hyeseung</span>
-      <span class="hero-line chrome-text block text-[clamp(2.4rem,9vw,7.5rem)]">Portfolio</span>
+    <h1 class="relative z-10 hero-title font-display font-extrabold leading-[0.95] tracking-[-0.03em] mb-10 select-none max-w-full">
+      <span class="hero-line chrome-text block text-[clamp(2.6rem,10vw,8rem)] whitespace-nowrap">Hyeseung</span>
+      <span class="hero-line chrome-text block text-[clamp(2.6rem,10vw,8rem)] whitespace-nowrap">Portfolio</span>
     </h1>
 
-    <p class="max-w-2xl text-lg md:text-2xl leading-relaxed font-medium">
+    <p class="relative z-10 max-w-2xl text-lg md:text-2xl leading-relaxed font-medium">
       웹을 처음부터 직접 만들며 배워가는 1학년입니다.
       <span class="text-muted">HTML/CSS로 디자인하고 GitHub Pages로 배포하면서, 작은 아이디어를 하나씩 완성해 나가는 과정을 기록합니다.</span>
     </p>
