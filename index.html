@@ -137,18 +137,19 @@
   </nav>
 
   <!-- ===== HERO ===== -->
-  <header id="top" class="relative max-w-[1200px] mx-auto px-[6vw] pt-[9vh] pb-[7vh] overflow-hidden">
-    <!-- 떠다니는 글래스 오브젝트 (오른쪽 하단 여백, 글자와 안 겹침) -->
-    <div class="blob hidden md:block w-36 h-36 lg:w-44 lg:h-44 right-[6vw] bottom-[10vh] opacity-80" aria-hidden="true"></div>
+  <header id="top" class="relative max-w-[1200px] mx-auto px-[6vw] pt-[9vh] pb-[7vh] overflow-visible">
+    <!-- 떠다니는 글래스 오브젝트 (텍스트 위 레이어, 오른쪽 상단에서 글자와 겹침) -->
+    <div class="blob w-28 h-28 md:w-48 md:h-48 right-[6vw] top-[12vh] opacity-90 z-30" aria-hidden="true"></div>
+    <div class="blob hidden md:block w-20 h-20 right-[28vw] top-[34vh] opacity-70 z-30" style="animation-delay:-3s" aria-hidden="true"></div>
 
     <p class="relative z-10 font-mono text-sm md:text-base text-muted mb-7 reveal visible">
       국민대학교 · 1학년 · 20262072 — Front-end in progress
     </p>
 
     <!-- 거대한 3D 크롬 타이포 -->
-    <h1 class="relative z-10 hero-title font-display font-extrabold leading-[0.95] tracking-[-0.03em] mb-10 select-none max-w-full">
-      <span class="hero-line chrome-text block text-[clamp(2.6rem,10vw,8rem)] whitespace-nowrap">Hyeseung</span>
-      <span class="hero-line chrome-text block text-[clamp(2.6rem,10vw,8rem)] whitespace-nowrap">Portfolio</span>
+    <h1 class="relative z-10 hero-title font-display font-extrabold leading-[0.95] tracking-[-0.02em] mb-10 select-none pr-[0.15em] overflow-visible">
+      <span class="hero-line chrome-text inline-block pr-[0.12em] text-[clamp(2.6rem,10vw,8rem)] whitespace-nowrap">Hyeseung</span>
+      <span class="hero-line chrome-text block pr-[0.12em] text-[clamp(2.6rem,10vw,8rem)] whitespace-nowrap">Portfolio</span>
     </h1>
 
     <p class="relative z-10 max-w-2xl text-lg md:text-2xl leading-relaxed font-medium">
