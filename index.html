@@ -56,19 +56,12 @@
 
     /* ===== 3D 글래스/크롬 타이포 효과 ===== */
     .chrome-text {
-      background: linear-gradient(
-        175deg,
-        #16915f 0%,
-        #0A4D33 30%,
-        #063524 55%,
-        #0d6b47 72%,
-        #063524 100%
-      );
+      background: linear-gradient(170deg, #1a9c68 0%, #0e6a47 45%, #0A4D33 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       text-shadow: 0 1px 0 rgba(255,255,255,0.35);
-      filter: drop-shadow(0 14px 22px rgba(10,77,51,0.22));
+      filter: drop-shadow(0 12px 18px rgba(10,77,51,0.18));
     }
     /* 마우스 반응형 패럴랙스(JS에서 변수 주입) */
     .hero-title {
@@ -145,9 +138,9 @@
 
   <!-- ===== HERO ===== -->
   <header id="top" class="relative max-w-[1200px] mx-auto px-[6vw] pt-[9vh] pb-[7vh] overflow-hidden">
-    <!-- 떠다니는 글래스 오브젝트 (글자와 안 겹치게 오른쪽 아래 배치) -->
-    <div class="blob hidden lg:block w-40 h-40 right-[2vw] bottom-[6vh] opacity-60" aria-hidden="true"></div>
-    <div class="blob hidden lg:block w-20 h-20 right-[16vw] bottom-[0vh] opacity-45" style="animation-delay:-3s" aria-hidden="true"></div>
+    <!-- 떠다니는 글래스 오브젝트 (오른쪽 상단) -->
+    <div class="blob w-32 h-32 md:w-52 md:h-52 right-[4vw] top-[1vh] opacity-80 z-20" aria-hidden="true"></div>
+    <div class="blob w-16 h-16 md:w-24 md:h-24 right-[22vw] top-[26vh] opacity-60 z-20" style="animation-delay:-3s" aria-hidden="true"></div>
 
     <p class="relative z-10 font-mono text-sm md:text-base text-muted mb-7 reveal visible">
       국민대학교 · 1학년 · 20262072 — Front-end in progress
