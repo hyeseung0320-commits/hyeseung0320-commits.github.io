@@ -81,6 +81,18 @@
     }
     .hero-line:hover { transform: scale(1.02); }
 
+    /* 응원 하트 톡 터지는 애니메이션 */
+    #cheerIcon.pop { animation: cheerPop 0.45s ease; }
+    @keyframes cheerPop {
+      0% { transform: scale(1); }
+      35% { transform: scale(1.5); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #cheerIcon.pop { animation: none; }
+    }
+
     /* 프로젝트 행 호버 라인 */
     .work-row { transition: padding 0.4s cubic-bezier(.2,.8,.2,1), background 0.4s; }
     .work-row:hover { padding-left: 1.25rem; padding-right: 1.25rem; background: rgba(10,77,51,0.04); }
@@ -160,6 +172,17 @@
       웹을 처음부터 직접 만들며 배워가는 1학년입니다.
       <span class="text-muted">HTML/CSS로 디자인하고 GitHub Pages로 배포하면서, 작은 아이디어를 하나씩 완성해 나가는 과정을 기록합니다.</span>
     </p>
+
+    <!-- 응원 공감 버튼 -->
+    <div class="relative z-10 mt-10 flex items-center gap-4">
+      <button id="cheerBtn" type="button" aria-label="응원하기"
+              class="group flex items-center gap-3 px-6 py-3 rounded-full border border-forest/30 bg-white/60 hover:bg-forest hover:text-cream transition-colors">
+        <span id="cheerIcon" class="text-xl transition-transform group-active:scale-90">🤍</span>
+        <span class="font-mono text-sm font-semibold">응원하기</span>
+        <span id="cheerCount" class="font-mono text-sm font-bold tabular-nums">–</span>
+      </button>
+      <span id="cheerMsg" class="font-mono text-xs text-forest opacity-0 transition-opacity">고마워요! 💚</span>
+    </div>
   </header>
 
   <!-- ===== WORK ===== -->
@@ -490,6 +513,57 @@
       });
 
       load();
+    })();
+
+    // ===== 응원 공감 버튼 (Supabase) =====
+    (function () {
+      var SUPABASE_URL = 'https://yhvyljiuafadkecocgbm.supabase.co';
+      var SUPABASE_KEY = 'sb_publishable_etIpYWbjqWEXbq7TX11Ifg_Wss3NwfY';
+
+      var btn = document.getElementById('cheerBtn');
+      var countEl = document.getElementById('cheerCount');
+      var iconEl = document.getElementById('cheerIcon');
+      var msgEl = document.getElementById('cheerMsg');
+      if (!btn || !window.supabase) { if (countEl) countEl.textContent = '–'; return; }
+
+      var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      var cheered = localStorage.getItem('cheered') === '1';
+      if (cheered) iconEl.textContent = '💚';
+
+      // 현재 총합 불러오기
+      db.from('reactions').select('count').eq('id', 'cheer').single()
+        .then(function (res) {
+          countEl.textContent = (res.data && typeof res.data.count === 'number') ? res.data.count : 0;
+        });
+
+      btn.addEventListener('click', function () {
+        if (btn.disabled) return;
+        if (localStorage.getItem('cheered') === '1') {
+          msgEl.textContent = '이미 응원했어요 :)';
+          msgEl.style.opacity = '1';
+          setTimeout(function () { msgEl.style.opacity = '0'; }, 2000);
+          return;
+        }
+        btn.disabled = true;
+
+        // 서버에서 1 증가 (안전한 RPC 함수)
+        db.rpc('increment_cheer').then(function (res) {
+          btn.disabled = false;
+          if (res.error) {
+            msgEl.textContent = '잠시 후 다시 시도해 주세요';
+            msgEl.style.opacity = '1';
+            setTimeout(function () { msgEl.style.opacity = '0'; }, 2500);
+            return;
+          }
+          if (typeof res.data === 'number') countEl.textContent = res.data;
+          localStorage.setItem('cheered', '1');
+          iconEl.textContent = '💚';
+          iconEl.classList.remove('pop'); void iconEl.offsetWidth; iconEl.classList.add('pop');
+          msgEl.textContent = '고마워요! 💚';
+          msgEl.style.opacity = '1';
+          setTimeout(function () { msgEl.style.opacity = '0'; }, 2500);
+        });
+      });
     })();
   </script>
 
