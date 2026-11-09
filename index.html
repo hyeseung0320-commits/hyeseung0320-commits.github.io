@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" data-theme="dark">
+<html lang="ko" data-theme="bubble">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
   <link rel="canonical" href="https://hyeseung0320-commits.github.io/">
 
   <!-- 파비콘 (이모지 SVG) -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪡</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫧</text></svg>">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -25,37 +25,90 @@
   <meta name="twitter:title" content="김혜승 | 국민대학교 1학년 개인 포트폴리오 홈페이지">
   <meta name="twitter:description" content="국민대학교 1학년 김혜승의 개인 포트폴리오 홈페이지입니다. HTML/CSS와 GitHub Pages로 직접 만든 웹사이트와 갤러그 슈팅게임 등 작업물을 소개합니다.">
 
+  <!-- 버블검 느낌 폰트 (제목: 둥글둥글 / 본문: 귀여운 고딕) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Jua&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
-    /* 다크 테마 (기본) */
+    /* ===== 버블검 테마 (기본, 밝은 핑크) ===== */
     :root,
-    [data-theme="dark"] {
-      --bg: #0f172a;
-      --card-bg: #1e293b;
-      --accent: #38bdf8;
-      --text: #f8fafc;
-      --text-dim: #94a3b8;
-      --border: #334155;
-      --tag-bg: #1e293b;
-    }
-    /* 라이트 테마 */
-    [data-theme="light"] {
-      --bg: #f1f5f9;
+    [data-theme="bubble"] {
+      --bg: #fff0f5;
+      --bg2: #ffe3ef;
       --card-bg: #ffffff;
-      --accent: #0284c7;
-      --text: #0f172a;
-      --text-dim: #475569;
-      --border: #cbd5e1;
-      --tag-bg: #e0f2fe;
+      --accent: #ff6fb0;
+      --accent2: #ff9ecd;
+      --accent-deep: #e0458b;
+      --text: #5c2a44;
+      --text-dim: #a76b88;
+      --border: #ffc6e0;
+      --tag-bg: #ffeaf4;
+      --shadow: rgba(255, 111, 176, 0.25);
+    }
+    /* ===== 민트소다 테마 (토글 시) ===== */
+    [data-theme="soda"] {
+      --bg: #eafcff;
+      --bg2: #d8f6fb;
+      --card-bg: #ffffff;
+      --accent: #38c6d9;
+      --accent2: #86e3ef;
+      --accent-deep: #1b9fb3;
+      --text: #184a52;
+      --text-dim: #5a97a0;
+      --border: #bdeef5;
+      --tag-bg: #e2f9fc;
+      --shadow: rgba(56, 198, 217, 0.25);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-      background-color: var(--bg);
+      font-family: 'Gaegu', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background:
+        radial-gradient(circle at 15% 15%, var(--bg2), transparent 45%),
+        radial-gradient(circle at 85% 10%, var(--bg2), transparent 40%),
+        var(--bg);
+      background-attachment: fixed;
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.7;
+      font-size: 1.05rem;
       transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* 떠다니는 배경 버블 */
+    .bubbles {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bubbles span {
+      position: absolute;
+      bottom: -120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #ffffffcc, var(--accent2));
+      opacity: 0.35;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      to { transform: translateY(-120vh) rotate(180deg); opacity: 0; }
+    }
+
+    /* 제목용 둥근 폰트 유틸 */
+    .bubble-font { font-family: 'Jua', 'Fredoka', sans-serif; }
+
+    /* 3D 풍선 글씨 효과 */
+    .balloon-text {
+      font-family: 'Jua', 'Fredoka', sans-serif;
+      background: linear-gradient(180deg, var(--accent2), var(--accent) 55%, var(--accent-deep));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 4px 0 rgba(255,255,255,0.6);
+      filter: drop-shadow(0 6px 6px var(--shadow));
+      letter-spacing: 1px;
     }
 
     /* 상단 메뉴 */
@@ -63,281 +116,428 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 8%;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
+      padding: 16px 8%;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
+      border-bottom: 2px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 10;
       transition: background-color 0.3s, border-color 0.3s;
     }
-    .logo { font-size: 1.2rem; font-weight: bold; color: var(--accent); }
+    .logo {
+      font-family: 'Jua', sans-serif;
+      font-size: 1.5rem;
+      color: var(--accent-deep);
+      text-shadow: 0 2px 0 #fff;
+    }
     .nav-right { display: flex; align-items: center; }
     .nav-links a {
+      font-family: 'Jua', sans-serif;
       color: var(--text-dim);
       text-decoration: none;
-      margin-left: 20px;
-      font-size: 0.95rem;
-      transition: color 0.2s;
+      margin-left: 18px;
+      font-size: 1.05rem;
+      transition: color 0.2s, transform 0.2s;
+      display: inline-block;
     }
-    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover { color: var(--accent); transform: translateY(-2px); }
 
     /* 테마 토글 버튼 */
     .theme-toggle {
-      margin-left: 20px;
+      margin-left: 18px;
       background: var(--card-bg);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
       color: var(--text);
-      width: 38px;
-      height: 38px;
+      width: 42px;
+      height: 42px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 3px 8px var(--shadow);
       transition: border-color 0.2s, transform 0.2s;
     }
-    .theme-toggle:hover { border-color: var(--accent); transform: scale(1.08); }
+    .theme-toggle:hover { border-color: var(--accent); transform: scale(1.12) rotate(12deg); }
 
     /* 자기소개 영역 */
     header {
+      position: relative;
+      z-index: 1;
       text-align: center;
-      padding: 60px 20px 40px;
+      padding: 70px 20px 40px;
     }
-    .profile-emoji { font-size: 70px; margin-bottom: 10px; }
-    header h1 { font-size: 2.1rem; margin-bottom: 10px; word-break: keep-all; }
-    .student-info { color: var(--accent); font-weight: bold; font-size: 1.05rem; margin-bottom: 15px; }
-    .intro-text { color: var(--text-dim); font-size: 1rem; max-width: 580px; margin: 0 auto; word-break: keep-all; line-height: 1.7; }
+    .profile-emoji {
+      font-size: 90px;
+      margin-bottom: 10px;
+      display: inline-block;
+      animation: bob 3s ease-in-out infinite;
+    }
+    @keyframes bob {
+      0%, 100% { transform: translateY(0) rotate(-4deg); }
+      50% { transform: translateY(-12px) rotate(4deg); }
+    }
+    header h1 {
+      font-size: 2.6rem;
+      margin-bottom: 14px;
+      word-break: keep-all;
+      line-height: 1.3;
+    }
+    .student-info {
+      font-family: 'Jua', sans-serif;
+      color: var(--accent-deep);
+      font-size: 1.2rem;
+      margin-bottom: 18px;
+      background: var(--tag-bg);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 20px;
+      border: 2px solid var(--border);
+    }
+    .intro-text { color: var(--text); font-size: 1.1rem; max-width: 600px; margin: 0 auto; word-break: keep-all; line-height: 1.85; }
     .intro-text p + p { margin-top: 12px; }
+    .intro-text strong { color: var(--accent-deep); }
 
     /* 태그 목록 */
     .tags {
-      margin-top: 20px;
+      margin-top: 22px;
       display: flex;
       justify-content: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
     }
     .tag {
-      background: var(--tag-bg);
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 0.85rem;
+      background: var(--card-bg);
+      border: 2px solid var(--accent2);
+      color: var(--accent-deep);
+      padding: 6px 18px;
+      border-radius: 30px;
+      font-size: 0.98rem;
+      font-family: 'Jua', sans-serif;
+      box-shadow: 0 3px 6px var(--shadow);
+      transition: transform 0.2s;
     }
+    .tag:hover { transform: translateY(-3px) scale(1.04); }
 
     /* 연락처 버튼 */
-    .contact { margin-top: 25px; }
+    .contact { margin-top: 28px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
     .contact a {
-      color: var(--text-dim);
+      font-family: 'Jua', sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
       text-decoration: none;
-      font-size: 0.9rem;
-      margin: 0 10px;
-      transition: color 0.2s;
+      font-size: 0.98rem;
+      padding: 10px 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    .contact a:hover { color: var(--accent); }
+    .contact a:hover { transform: translateY(-3px); box-shadow: 0 7px 16px var(--shadow); }
 
-    /* 프로젝트 메인 콘텐츠 */
-    .container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+    /* 메인 콘텐츠 */
+    .container { position: relative; z-index: 1; max-width: 920px; margin: 0 auto; padding: 36px 20px; }
     .section-title {
-      font-size: 1.4rem;
-      margin-bottom: 20px;
-      border-left: 4px solid var(--accent);
-      padding-left: 10px;
+      font-family: 'Jua', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 26px;
+      text-align: center;
+      color: var(--accent-deep);
     }
+    .section-title .emoji { -webkit-text-fill-color: initial; }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 24px;
     }
     .card {
       background: var(--card-bg);
-      border-radius: 12px;
-      padding: 22px;
-      border: 1px solid var(--border);
-      transition: transform 0.2s, border-color 0.2s, background-color 0.3s;
+      border-radius: 26px;
+      padding: 24px;
+      border: 2px solid var(--border);
+      box-shadow: 0 8px 20px var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
       display: flex;
       flex-direction: column;
     }
     .card:hover {
-      transform: translateY(-4px);
-      border-color: var(--accent);
+      transform: translateY(-8px) rotate(-1deg);
+      box-shadow: 0 14px 30px var(--shadow);
     }
-    /* 카드 썸네일 (이모지 배너) */
     .card-thumb {
-      height: 120px;
-      border-radius: 8px;
+      height: 130px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 52px;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(56,189,248,0.04));
-      border: 1px solid var(--border);
+      font-size: 60px;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      box-shadow: inset 0 -6px 14px rgba(0,0,0,0.08);
     }
-    .card h3 { color: var(--accent); margin-bottom: 10px; font-size: 1.15rem; }
-    .card p { color: var(--text-dim); font-size: 0.9rem; margin-bottom: 14px; line-height: 1.5; }
-    /* 카드 기술 태그 */
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
+    .card h3 { font-family: 'Jua', sans-serif; color: var(--accent-deep); margin-bottom: 10px; font-size: 1.3rem; }
+    .card p { color: var(--text); font-size: 1rem; margin-bottom: 16px; line-height: 1.6; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
     .card-tag {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 2px 8px;
+      font-size: 0.82rem;
+      color: var(--accent-deep);
+      background: var(--tag-bg);
+      border-radius: 12px;
+      padding: 3px 10px;
     }
-    .card .card-date { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 14px; }
+    .card .card-date { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 16px; }
     .card a.card-link {
       display: inline-block;
-      padding: 8px 16px;
-      background: var(--accent);
-      color: var(--bg);
-      font-weight: bold;
+      padding: 10px 20px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff;
+      font-family: 'Jua', sans-serif;
       text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.85rem;
+      border-radius: 20px;
+      font-size: 0.95rem;
       margin-top: auto;
       align-self: flex-start;
+      box-shadow: 0 4px 10px var(--shadow);
+      transition: transform 0.2s;
     }
+    .card a.card-link:hover { transform: scale(1.05); }
+
+    /* ===== 스킬 섹션 ===== */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .skill {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 22px;
+      padding: 18px;
+      text-align: center;
+      box-shadow: 0 6px 14px var(--shadow);
+      transition: transform 0.2s;
+    }
+    .skill:hover { transform: translateY(-5px); }
+    .skill .skill-emoji { font-size: 38px; display: block; margin-bottom: 8px; }
+    .skill .skill-name { font-family: 'Jua', sans-serif; color: var(--accent-deep); margin-bottom: 10px; }
+    .skill .bar {
+      height: 12px;
+      background: var(--tag-bg);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .skill .bar > i {
+      display: block;
+      height: 100%;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--accent2), var(--accent));
+      width: 0;
+      transition: width 1.1s ease;
+    }
+    .skill .skill-level { font-size: 0.82rem; color: var(--text-dim); margin-top: 6px; }
+
+    /* ===== 타임라인 (성장 기록) ===== */
+    .timeline { max-width: 640px; margin: 0 auto; position: relative; padding-left: 34px; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 11px;
+      top: 6px;
+      bottom: 6px;
+      width: 4px;
+      border-radius: 4px;
+      background: linear-gradient(var(--accent2), var(--accent));
+    }
+    .timeline-item { position: relative; margin-bottom: 26px; }
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -34px;
+      top: 4px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 4px solid var(--card-bg);
+      box-shadow: 0 0 0 3px var(--accent2);
+    }
+    .timeline-item .tl-date { font-family: 'Jua', sans-serif; color: var(--accent-deep); font-size: 1.05rem; }
+    .timeline-item .tl-body {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 18px;
+      margin-top: 6px;
+      box-shadow: 0 5px 12px var(--shadow);
+    }
+    .timeline-item .tl-body strong { color: var(--accent-deep); font-family: 'Jua', sans-serif; }
+
+    /* ===== 좋아하는 것들 ===== */
+    .fav-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+    }
+    .fav {
+      background: var(--card-bg);
+      border: 2px solid var(--border);
+      border-radius: 30px;
+      padding: 12px 22px;
+      font-family: 'Jua', sans-serif;
+      color: var(--text);
+      box-shadow: 0 5px 12px var(--shadow);
+      transition: transform 0.2s;
+    }
+    .fav:hover { transform: translateY(-4px) rotate(2deg); }
+    .fav .fav-emoji { font-size: 1.3rem; margin-right: 6px; }
 
     /* 스크롤 등장 애니메이션 */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .reveal { opacity: 1; transform: none; transition: none; }
+      .profile-emoji { animation: none; }
+      .bubbles { display: none; }
     }
 
     /* 응원 하트 섹션 */
-    .cheer {
-      text-align: center;
-      padding: 10px 20px 20px;
-    }
-    .cheer p { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 16px; }
+    .cheer { position: relative; z-index: 1; text-align: center; padding: 20px; }
+    .cheer p { color: var(--text); font-size: 1.05rem; margin-bottom: 18px; }
     .heart-btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 12px 24px;
-      border-radius: 30px;
-      font-size: 1rem;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      border: none;
+      color: #fff;
+      padding: 14px 30px;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-family: 'Jua', sans-serif;
       cursor: pointer;
-      transition: border-color 0.2s, transform 0.1s, background-color 0.3s;
-      font-family: inherit;
+      box-shadow: 0 6px 16px var(--shadow);
+      transition: transform 0.1s, box-shadow 0.2s;
     }
-    .heart-btn:hover { border-color: var(--accent); }
+    .heart-btn:hover { box-shadow: 0 9px 22px var(--shadow); transform: translateY(-2px); }
     .heart-btn:active { transform: scale(0.95); }
-    .heart-btn .heart-icon {
-      font-size: 1.3rem;
-      transition: transform 0.25s;
-      display: inline-block;
-    }
-    /* 눌렀을 때 하트 톡 터지는 애니메이션 */
+    .heart-btn .heart-icon { font-size: 1.4rem; transition: transform 0.25s; display: inline-block; }
     .heart-btn.pop .heart-icon { animation: heartPop 0.45s ease; }
     @keyframes heartPop {
       0%   { transform: scale(1); }
-      35%  { transform: scale(1.5); }
+      35%  { transform: scale(1.6); }
       70%  { transform: scale(0.9); }
       100% { transform: scale(1); }
     }
-    .heart-btn .heart-count {
-      font-weight: bold;
-      color: var(--accent);
-      min-width: 20px;
-    }
-    .cheer .cheer-thanks {
-      margin-top: 14px;
-      font-size: 0.88rem;
-      color: var(--accent);
-      height: 20px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
+    .heart-btn .heart-count { font-weight: bold; min-width: 20px; }
+    .cheer .cheer-thanks { margin-top: 16px; font-size: 0.95rem; color: var(--accent-deep); height: 20px; opacity: 0; transition: opacity 0.3s; font-family: 'Jua', sans-serif; }
     .cheer .cheer-thanks.show { opacity: 1; }
-    @media (prefers-reduced-motion: reduce) {
-      .heart-btn.pop .heart-icon { animation: none; }
-    }
+    @media (prefers-reduced-motion: reduce) { .heart-btn.pop .heart-icon { animation: none; } }
 
     footer {
+      position: relative;
+      z-index: 1;
       text-align: center;
-      padding: 40px 20px;
+      padding: 44px 20px;
       color: var(--text-dim);
-      border-top: 1px solid var(--border);
-      font-size: 0.85rem;
+      border-top: 2px dashed var(--border);
+      font-size: 0.9rem;
       margin-top: 50px;
     }
+    footer .footer-emoji { font-size: 1.6rem; }
   </style>
 </head>
 <body>
 
+  <!-- 떠다니는 배경 버블 -->
+  <div class="bubbles" aria-hidden="true" id="bubbles"></div>
+
   <!-- 상단 메뉴 -->
   <nav>
-    <div class="logo">혜승's Space</div>
+    <div class="logo">🫧 혜승's Space</div>
     <div class="nav-right">
       <div class="nav-links">
         <a href="#about">소개</a>
+        <a href="#skills">스킬</a>
         <a href="#projects">작업물</a>
+        <a href="#timeline">성장기록</a>
         <a href="https://github.com/hyeseung0320-commits" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
-      <button class="theme-toggle" id="themeToggle" type="button" aria-label="테마 전환">🌙</button>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="테마 전환">🍬</button>
     </div>
   </nav>
 
-  <!-- 동기 대상 자기소개 섹션 -->
+  <!-- 자기소개 섹션 -->
   <header id="about">
-    <div class="profile-emoji">👋</div>
-    <h1>안녕하세요! 국민대 동기 여러분</h1>
-    <div class="student-info">국민대학교 1학년 · 김혜승 (학번: 20262072)</div>
-    
+    <div class="profile-emoji">🧸</div>
+    <h1 class="balloon-text">안녕하세요!<br>국민대 동기 여러분</h1>
+    <div class="student-info">국민대학교 1학년 · 김혜승 (학번 20262072)</div>
+
     <div class="intro-text">
-      <p>반가워요! 수업을 들으며 나만의 웹사이트 제작에 도전하고 있는 1학년 김혜승입니다.</p>
+      <p>반가워요! 수업을 들으며 나만의 웹사이트 제작에 도전하고 있는 1학년 <strong>김혜승</strong>이에요. 🌸</p>
       <p>요즘은 <strong>GitHub</strong>를 활용해서 HTML 웹사이트를 직접 만들고 배포하는 방법을 차근차근 배우고 있어요!</p>
       <p>새로운 걸 배우고 직접 만들어 보는 과정을 좋아해서, 작은 아이디어라도 코드로 구현해 보며 하나씩 완성해 나가는 재미에 푹 빠져 있어요.</p>
-      <p>이 공간은 제가 배운 것과 만든 작업물을 차곡차곡 쌓아 가는 곳이에요. 앞으로 더 멋진 결과물로 채워 나갈 테니 자주 놀러 와 주세요! 🙌</p>
+      <p>이 공간은 제가 배운 것과 만든 작업물을 차곡차곡 쌓아 가는 곳이에요. 앞으로 더 예쁜 결과물로 채워 나갈 테니 자주 놀러 와 주세요! 🙌</p>
     </div>
 
-    <!-- 기술 및 태그 -->
     <div class="tags">
       <span class="tag">🎓 국민대학교</span>
       <span class="tag">🐣 1학년 (20262072)</span>
       <span class="tag">💻 HTML/CSS</span>
-      <span class="tag">🚀 GitHub Pages 배포 배우는 중</span>
+      <span class="tag">🚀 GitHub Pages 배우는 중</span>
     </div>
 
-    <!-- 이메일 및 GitHub -->
     <div class="contact">
-      <a href="mailto:hyeseunghyeseung@naver.com">✉️ hyeseunghyeseung@naver.com</a>
-      <a href="https://github.com/hyeseung0320-commits" target="_blank" rel="noopener noreferrer">🐙 GitHub 프로필 방문하기</a>
+      <a href="mailto:hyeseunghyeseung@naver.com">✉️ 이메일 보내기</a>
+      <a href="https://github.com/hyeseung0320-commits" target="_blank" rel="noopener noreferrer">🐙 GitHub 방문하기</a>
     </div>
   </header>
 
-  <!-- 작업 및 프로젝트 모음 -->
+  <!-- ===== 스킬 섹션 ===== -->
+  <section class="container" id="skills">
+    <h2 class="section-title reveal"><span class="emoji">🎀</span> My Skills</h2>
+    <div class="skills-grid reveal">
+      <div class="skill">
+        <span class="skill-emoji">📄</span>
+        <div class="skill-name">HTML</div>
+        <div class="bar"><i data-level="75"></i></div>
+        <div class="skill-level">열심히 배우는 중 75%</div>
+      </div>
+      <div class="skill">
+        <span class="skill-emoji">🎨</span>
+        <div class="skill-name">CSS</div>
+        <div class="bar"><i data-level="65"></i></div>
+        <div class="skill-level">예쁘게 꾸미기 65%</div>
+      </div>
+      <div class="skill">
+        <span class="skill-emoji">⚡</span>
+        <div class="skill-name">JavaScript</div>
+        <div class="bar"><i data-level="40"></i></div>
+        <div class="skill-level">한 걸음씩 40%</div>
+      </div>
+      <div class="skill">
+        <span class="skill-emoji">🐙</span>
+        <div class="skill-name">GitHub</div>
+        <div class="bar"><i data-level="60"></i></div>
+        <div class="skill-level">배포까지 도전 60%</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 작업 및 프로젝트 모음 ===== -->
   <main class="container" id="projects">
-    <h2 class="section-title reveal">My Projects</h2>
+    <h2 class="section-title reveal"><span class="emoji">🧁</span> My Projects</h2>
     <div class="grid">
-      
-      <!-- 현재 작업: 내 사이트 만들기 -->
+
       <div class="card reveal">
         <div class="card-thumb">🌐</div>
         <h3>내 개인 사이트 만들기</h3>
-        <p>수업을 들으며 만들고 있는 저의 첫 번째 포트폴리오 사이트입니다. HTML/CSS로 직접 디자인하고 GitHub Pages로 배포했어요. 계속해서 새로운 기능과 작업물을 업데이트해 나갈 예정이에요!</p>
+        <p>수업을 들으며 만들고 있는 저의 첫 번째 포트폴리오 사이트예요. HTML/CSS로 직접 디자인하고 GitHub Pages로 배포했어요. 계속해서 새로운 기능과 작업물을 업데이트해 나갈 예정이에요!</p>
         <div class="card-tags">
           <span class="card-tag">HTML</span>
           <span class="card-tag">CSS</span>
@@ -347,11 +547,10 @@
         <a class="card-link" href="https://github.com/hyeseung0320-commits/hyeseung0320-commits.github.io" target="_blank" rel="noopener noreferrer">소스 코드 보기</a>
       </div>
 
-      <!-- 프로젝트: 갤러그 게임 -->
       <div class="card reveal">
         <div class="card-thumb">🚀</div>
         <h3>꿀잼 슈팅게임 (Galaga)</h3>
-        <p>HTML5와 JavaScript를 활용해 만든 추억의 아케이드 갤러그 게임입니다. 적을 피하며 슈팅하는 간단한 조작으로, 심심할 때 언제든 직접 플레이해 보세요!</p>
+        <p>HTML5와 JavaScript를 활용해 만든 추억의 아케이드 갤러그 게임이에요. 적을 피하며 슈팅하는 간단한 조작으로, 심심할 때 언제든 직접 플레이해 보세요!</p>
         <div class="card-tags">
           <span class="card-tag">HTML5</span>
           <span class="card-tag">JavaScript</span>
@@ -361,12 +560,66 @@
         <a class="card-link" href="/galaga/" target="_blank" rel="noopener noreferrer">게임 플레이하기</a>
       </div>
 
+      <div class="card reveal">
+        <div class="card-thumb">🫧</div>
+        <h3>버블검 테마 리뉴얼</h3>
+        <p>딱딱했던 다크 테마에서 벗어나, 둥글둥글한 풍선 글씨와 핑크 파스텔 톤으로 사이트를 새 단장했어요. 떠다니는 버블 배경과 애니메이션도 직접 넣어봤답니다!</p>
+        <div class="card-tags">
+          <span class="card-tag">CSS 애니메이션</span>
+          <span class="card-tag">웹폰트</span>
+          <span class="card-tag">디자인</span>
+        </div>
+        <div class="card-date">📅 2026년 11월</div>
+        <a class="card-link" href="#about">사이트 둘러보기</a>
+      </div>
+
     </div>
   </main>
 
+  <!-- ===== 타임라인 (성장 기록) ===== -->
+  <section class="container" id="timeline">
+    <h2 class="section-title reveal"><span class="emoji">🌱</span> 성장 기록</h2>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="tl-date">2026년 3월</div>
+        <div class="tl-body"><strong>국민대학교 입학 🎓</strong><br>설레는 마음으로 대학 생활을 시작했어요.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-date">2026년 9월</div>
+        <div class="tl-body"><strong>HTML/CSS 공부 시작 💻</strong><br>수업을 들으며 웹의 기초를 다지기 시작했어요.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-date">2026년 10월</div>
+        <div class="tl-body"><strong>첫 홈페이지 배포 🚀</strong><br>GitHub Pages로 제 손으로 만든 사이트를 세상에 공개했어요.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-date">2026년 11월</div>
+        <div class="tl-body"><strong>버블검 테마로 리뉴얼 🫧</strong><br>더 예쁘고 나다운 스타일로 사이트를 꾸몄어요.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="tl-date">앞으로...</div>
+        <div class="tl-body"><strong>더 많은 작업물 ✨</strong><br>JavaScript도 더 배우고, 재밌는 프로젝트를 계속 만들 거예요!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 좋아하는 것들 ===== -->
+  <section class="container" id="fav">
+    <h2 class="section-title reveal"><span class="emoji">💖</span> 좋아하는 것들</h2>
+    <div class="fav-grid reveal">
+      <span class="fav"><span class="fav-emoji">💻</span>코딩</span>
+      <span class="fav"><span class="fav-emoji">🎨</span>그림 그리기</span>
+      <span class="fav"><span class="fav-emoji">🎮</span>게임</span>
+      <span class="fav"><span class="fav-emoji">🎵</span>음악 듣기</span>
+      <span class="fav"><span class="fav-emoji">🧋</span>버블티</span>
+      <span class="fav"><span class="fav-emoji">📚</span>새로운 것 배우기</span>
+      <span class="fav"><span class="fav-emoji">🐱</span>고양이</span>
+    </div>
+  </section>
+
   <!-- 응원 하트 -->
   <section class="cheer reveal">
-    <p>이 페이지가 마음에 드셨다면 하트로 응원해 주세요! 💙</p>
+    <p>이 페이지가 마음에 드셨다면 하트로 응원해 주세요! 💗</p>
     <button class="heart-btn" id="heartBtn" type="button" aria-label="응원 하트 누르기">
       <span class="heart-icon">🤍</span>
       <span class="heart-count" id="heartCount">0</span>
@@ -375,41 +628,66 @@
   </section>
 
   <footer>
-    <p>© 2026 김혜승 (20262072). All rights reserved.</p>
+    <div class="footer-emoji">🫧🧸🎀</div>
+    <p>© 2026 김혜승 (20262072). Made with 💗 by 혜승</p>
   </footer>
 
   <script>
-    // 테마 토글: 저장된 설정 불러오기
+    // 떠다니는 배경 버블 생성
+    (function () {
+      var wrap = document.getElementById('bubbles');
+      if (!wrap || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var count = 14;
+      for (var i = 0; i < count; i++) {
+        var b = document.createElement('span');
+        var size = 20 + Math.random() * 60;
+        b.style.width = size + 'px';
+        b.style.height = size + 'px';
+        b.style.left = Math.random() * 100 + 'vw';
+        b.style.animationDuration = (10 + Math.random() * 14) + 's';
+        b.style.animationDelay = (Math.random() * 10) + 's';
+        wrap.appendChild(b);
+      }
+    })();
+
+    // 테마 토글 (버블검 핑크 <-> 민트소다)
     (function () {
       var root = document.documentElement;
       var toggle = document.getElementById('themeToggle');
       var saved = localStorage.getItem('theme');
-      if (saved) {
+      if (saved === 'bubble' || saved === 'soda') {
         root.setAttribute('data-theme', saved);
       }
       function updateIcon() {
-        toggle.textContent = root.getAttribute('data-theme') === 'light' ? '☀️' : '🌙';
+        toggle.textContent = root.getAttribute('data-theme') === 'soda' ? '🧋' : '🍬';
       }
       updateIcon();
       toggle.addEventListener('click', function () {
-        var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        var next = root.getAttribute('data-theme') === 'soda' ? 'bubble' : 'soda';
         root.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
         updateIcon();
       });
     })();
 
-    // 스크롤 등장 애니메이션
+    // 스크롤 등장 애니메이션 + 스킬 바 채우기
     (function () {
       var items = document.querySelectorAll('.reveal');
+      function fillBars(scope) {
+        scope.querySelectorAll('.bar > i').forEach(function (bar) {
+          bar.style.width = (bar.getAttribute('data-level') || 0) + '%';
+        });
+      }
       if (!('IntersectionObserver' in window)) {
         items.forEach(function (el) { el.classList.add('visible'); });
+        fillBars(document);
         return;
       }
       var observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            fillBars(entry.target);
             observer.unobserve(entry.target);
           }
         });
@@ -427,20 +705,18 @@
       var count = parseInt(localStorage.getItem('cheerCount') || '0', 10);
       if (isNaN(count) || count < 0) { count = 0; }
       countEl.textContent = count;
-      if (count > 0) { iconEl.textContent = '💙'; }
+      if (count > 0) { iconEl.textContent = '💗'; }
 
       btn.addEventListener('click', function () {
         count += 1;
         localStorage.setItem('cheerCount', count);
         countEl.textContent = count;
-        iconEl.textContent = '💙';
+        iconEl.textContent = '💗';
 
-        // 톡 터지는 애니메이션 재시작
         btn.classList.remove('pop');
         void btn.offsetWidth;
         btn.classList.add('pop');
 
-        // 감사 메시지 잠깐 표시
         thanks.classList.add('show');
         clearTimeout(btn._thanksTimer);
         btn._thanksTimer = setTimeout(function () {
